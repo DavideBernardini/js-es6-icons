@@ -113,8 +113,17 @@ const icons = [
 ];
 
 icons.forEach((elm, i) => {
+    const {name, family, prefix, category} = elm;
+
     document.getElementById('icons').innerHTML += `<div class="card">
-                                                        <i class="${icons[i]['family']} ${icons[i]['prefix']}${icons[i]['name']}"></i>
-                                                        <div class="icon-name">${icons[i]['name']}</div>
-                                                    </div>`
+                                                        <i id="${i}" class="${family} ${prefix}${name}"></i>
+                                                        <div class="icon-name">${name}</div>
+                                                    </div>`;
+    if (category == 'food') {
+        document.getElementById(`${i}`).classList.add('yellow');
+    } else if (category == 'beverage') {
+        document.getElementById(`${i}`).classList.add('red');
+    } else if (category == 'animal') {
+        document.getElementById(`${i}`).classList.add('green');
+    }
 });
