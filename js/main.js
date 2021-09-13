@@ -175,7 +175,7 @@ iconCategories.forEach(
 );
 
 selectedCategory.addEventListener('change', () => {
-    const iconsFiltered = iconsColored.filter((elm) => elm.category == selectedCategory.value);
+    const iconsFiltered = iconsColored.filter((elm) => elm.category == selectedCategory.value || selectedCategory.value == '');
     printIcons(iconsFiltered, iconsContainer);
     }
 );
