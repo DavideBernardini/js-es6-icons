@@ -1,5 +1,11 @@
-// Milestone 1
-// Partendo dalla seguente struttura dati , mostriamo in pagina tutte le icone disponibili come da layout.
+/* Milestone 1
+Partendo dalla seguente struttura dati , mostriamo in pagina tutte le icone disponibili come da layout.
+
+Milestone 2
+Coloriamo le icone per tipo
+
+Milestone 3
+Creiamo una select con i tipi di icone e usiamola per filtrare le icone*/
 
 const icons = [
 	{
@@ -112,18 +118,64 @@ const icons = [
 	},
 ];
 
-icons.forEach((elm, i) => {
-    const {name, family, prefix, category} = elm;
+// Milestone 1
 
-    document.getElementById('icons').innerHTML += `<div class="card">
-                                                        <i id="${i}" class="${family} ${prefix}${name}"></i>
-                                                        <div class="icon-name">${name}</div>
-                                                    </div>`;
-    if (category == 'food') {
-        document.getElementById(`${i}`).classList.add('yellow');
-    } else if (category == 'beverage') {
-        document.getElementById(`${i}`).classList.add('red');
-    } else if (category == 'animal') {
-        document.getElementById(`${i}`).classList.add('green');
+// funzioni
+const printIcons = (array, container) => {
+    container.innerHTML = '';
+    array.forEach((elm) => {
+        const {name, family, prefix, color} = elm;
+    
+        container.innerHTML += `<div class="card">
+                                    <i class="${family} ${prefix}${name}" style="color: ${color}"></i>
+                                        <div class="icon-name">${name}</div>
+                                </div>`;
+    });
+};
+
+const iconsContainer = document.getElementById('icons');
+
+// Milestone 2
+
+const colors = {
+    food: 'yellow',
+    beverage: 'red',
+    animal: 'green'
+};
+
+const iconsColored = icons.map(
+    (elm) => {
+        return {
+            ...elm,
+            color: colors[elm.category]
+        };
     }
-});
+);
+
+printIcons(iconsColored, iconsContainer);
+
+// Milestone 3
+
+const iconCategories = [];
+
+icons.forEach(
+    (elm) => {
+        if (iconCategories.includes(elm.category) == false) {
+            iconCategories.push(elm.category);
+        }
+    }
+);
+
+const selectedCategory = document.getElementById('cat');
+
+iconCategories.forEach(
+    (elm) => {
+        selectedCategory.innerHTML += `<option value="${elm}">${elm}</option>`;
+    }
+);
+
+selectedCategory.addEventListener('change', () => {
+    const iconsFiltered = iconsColored.filter((elm) => elm.category == selectedCategory.value);
+    printIcons(iconsFiltered, iconsContainer);
+    }
+);
